@@ -1,8 +1,9 @@
-﻿// Build-time routing only. This file is not imported into the browser bundle.
+// Build-time routing only. This file is not imported into the browser bundle.
+export const DEFAULT_RENDER_API_ORIGIN = 'https://touchgrass-api-7x8m.onrender.com'
 export function createDeploymentConfig(env) {
   if (env.VITE_API_BASE_URL !== '/api') throw new Error('Set VITE_API_BASE_URL=/api for the same-origin production API proxy.')
   let origin
-  try { origin = new URL(env.RENDER_API_ORIGIN) } catch { throw new Error('Set RENDER_API_ORIGIN to the HTTPS origin of the Render web service.') }
+  try { origin = new URL(env.RENDER_API_ORIGIN ?? DEFAULT_RENDER_API_ORIGIN) } catch { throw new Error('Set RENDER_API_ORIGIN to the HTTPS origin of the Render web service.') }
   if (origin.protocol !== 'https:' || origin.username || origin.password || origin.pathname !== '/' || origin.search || origin.hash) {
     throw new Error('RENDER_API_ORIGIN must be an HTTPS origin without credentials, path, query, or fragment.')
   }

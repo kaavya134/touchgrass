@@ -2,6 +2,8 @@
 
 Target repository: `https://github.com/kaavya134/touchgrass`, production branch `master`.
 
+Live Render backend: `https://touchgrass-api-7x8m.onrender.com`. The Vercel frontend is still to be created.
+
 ## Architecture
 
 The browser calls the Vercel site's `/api` path. `client-vue/vercel.mjs` evaluates public routing environment variables at build time and rewrites that path directly to the Render service's `/api` path. This is an external CDN rewrite, not a Vercel Function or routing middleware. The SPA fallback comes after the API rule. Both the API and proxy disable caching for API responses.
@@ -51,10 +53,10 @@ Do not set `AUTH_INTEGRATION=1`. Leave `PORT` to Render. No MongoDB credentials 
 | Vercel variable NAME | Setting or source (Production environment) |
 | --- | --- |
 | `VITE_API_BASE_URL` | `/api` |
-| `RENDER_API_ORIGIN` | The public HTTPS Render service origin, no `/api`, path, credentials, query, or fragment |
+| `RENDER_API_ORIGIN` | `https://touchgrass-api-7x8m.onrender.com` (no `/api` suffix) |
 | `ENABLE_EXPERIMENTAL_COREPACK` | `1` |
 
-`RENDER_API_ORIGIN` is read only by the deployment config; it is not a browser secret. The production config fails closed if it is missing or the browser API base is not `/api`. Do not add AI credentials, MongoDB credentials, or `SESSION_SECRET` to Vercel. Only production needs access initially. Preview deployments should use a separate backend/database and exact preview origins if enabled later; do not wildcard-allow preview URLs.
+`RENDER_API_ORIGIN` is read only by the deployment config; it is not a browser secret. The proxy defaults to the live Render backend above. Set `RENDER_API_ORIGIN` explicitly to the same origin in Vercel for clarity; an override must be an HTTPS origin with no path or credentials. Invalid overrides and a browser API base other than `/api` fail closed. Do not add AI credentials, MongoDB credentials, or `SESSION_SECRET` to Vercel. Only production needs access initially. Preview deployments should use a separate backend/database and exact preview origins if enabled later; do not wildcard-allow preview URLs.
 
 ## Dashboard sequence
 

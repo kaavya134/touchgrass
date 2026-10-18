@@ -1,4 +1,4 @@
-﻿import test from 'node:test'
+import test from 'node:test'
 import assert from 'node:assert/strict'
 import { createDeploymentConfig } from '../deployment-config.mjs'
 
@@ -20,4 +20,10 @@ test('deployment fails closed for missing or unsafe routing environment without 
   for (const base of [undefined, 'http://localhost:8000/api', 'https://example.test/api']) {
     assert.throws(() => createDeploymentConfig({ ...env, VITE_API_BASE_URL: base }), /VITE_API_BASE_URL/)
   }
+})
+
+
+test('production proxy targets the deployed Render backend by default', () => {
+  const config = createDeploymentConfig({ VITE_API_BASE_URL: '/api' })
+  assert.equal(config.rewrites[0].destination, 'https://touchgrass-api-7x8m.onrender.com/api/:path*')
 })
