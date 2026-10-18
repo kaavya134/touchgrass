@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
+const { isMonday } = require('../competition')
 
 const groupSchema = new mongoose.Schema({
+  competitionStartDate: { type: String, validate: isMonday },
+  eligibilitySource: { type: String, enum: ['created','rollout'] },
+  eligibilityRecordedAt: Date,
   name: {
     type: String,
     required: true,
@@ -22,6 +26,11 @@ const groupSchema = new mongoose.Schema({
     default: 'Buy everyone a coffee'
   },
   members: [{
+    joinedAt: Date,
+    competitionStartDate: { type: String, validate: isMonday },
+    eligibilitySource: { type: String, enum: ['created','joined','rollout'] },
+    eligibilityRecordedAt: Date,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     name: {
       type: String,
       required: true,

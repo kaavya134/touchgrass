@@ -1,6 +1,65 @@
-node_modules/
+﻿# Local configuration and secrets (safe examples remain versioned)
 .env
 .env.*
 !.env.example
-dist/
+*.env
+*.env.*
+!*.env.example
+.envrc
+.npmrc
+.pnpmrc
+credentials.json
+credentials-*.json
+credentials*.csv
+secrets.json
+secrets-*.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+.aws/
+.ssh/
+.codex/
 
+# Dependencies and generated output
+node_modules/
+dist/
+dist-ssr/
+build/
+coverage/
+.vite/
+.cache/
+*.tsbuildinfo
+*.log
+logs/
+
+# Personal uploads, screenshots and database backups
+uploads/
+[Ss]creenshots/
+personal-screenshots/
+[Ss]creenshot*.png
+[Ss]creenshot*.jpg
+[Ss]creenshot*.jpeg
+[Ss]creenshot*.webp
+[Ss]creen [Ss]hot*.png
+[Ss]creen [Ss]hot*.jpg
+[Ss]creen [Ss]hot*.jpeg
+[Ss]creen [Ss]hot*.webp
+*.bson
+*.sqlite
+*.sqlite3
+*.db
+backups/
+dump/
+
+# Local scratch and editor files
+tmp/
+*.local
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
