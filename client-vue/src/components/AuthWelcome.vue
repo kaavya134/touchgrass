@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import api, { setCsrfToken } from '../api'
 import BrandMark from './BrandMark.vue'
 defineProps({ connectionError: String })
-const emit = defineEmits(['authenticated','retry'])
+const emit = defineEmits(['authenticated','retry','explore'])
 const mode = ref('login')
 const displayName = ref('')
 const email = ref('')
@@ -40,6 +40,7 @@ async function submit() {
           <p v-if="error" role="alert" class="alert alert-danger">{{ error }}</p>
           <button class="btn btn-mustard w-100" :disabled="busy">{{ busy ? 'Please wait...' : mode === 'signup' ? 'Start growing together' : 'Log in to TouchGrass' }}</button>
         </form>
+        <div class="demo-invite"><button type="button" class="btn btn-outline-success w-100" @click="emit('explore')">Explore demo</button><p class="storage-note">A read-only sample week. No account needed.</p></div>
         <p class="small text-secondary mt-3">No social login, password reset or email verification yet. Diary and activity data stay browser-local and are scoped to your account.</p>
       </section>
     </div>

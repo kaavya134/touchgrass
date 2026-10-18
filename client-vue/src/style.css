@@ -346,3 +346,36 @@ body { font-size: 16px; }
   .mobile-logout .lucide { margin-right: 3px; }
 }
 @media (prefers-reduced-motion: reduce) { .lucide, .feature-icon { transition: none !important; animation: none !important; } }
+/* Read-only demo reuses the authenticated app's forest/cream layouts. */
+.demo-banner { position: sticky; top: 0; z-index: 25; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px clamp(24px,3vw,52px); background: var(--paper); border-bottom: 1px solid var(--line); }
+.demo-banner > div { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; }
+.demo-label { display: inline-block; background: var(--mustard); color: var(--forest-deep); border-radius: 24px; padding: 7px 12px; font-size: 14px; font-weight: 750; }
+.demo-sidebar .demo-label { align-self: start; margin-top: -14px; }
+.demo-banner-note { color: var(--muted); font-size: 14px; }
+.demo-banner .btn { flex-shrink: 0; font-size: 16px; }
+.demo-sidebar-label { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-weight: 700; }
+.demo-invite { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 24px; }
+.demo-invite .storage-note { text-align: center; }
+.demo-shell .main-content { padding-bottom: 48px; }
+.demo-shell .board-caption, .demo-shell .ranking-explanation, .demo-shell .summary-card p { font-size: 14px; }
+.demo-member .member-identity strong, .demo-member .member-total { font-size: 16px; }
+.demo-member .member-identity span, .demo-member .member-total span { font-size: 13px; }
+.demo-completeness { font-size: 14px; color: var(--forest); margin: 16px 0 8px; }
+.demo-days { list-style: none; padding: 0; margin-bottom: 0; grid-template-columns: repeat(7,minmax(0,1fr)); }
+.demo-days .day-cell { padding: 10px 5px; font-size: 13px; text-align: center; }
+.demo-days time span { display: block; }
+.demo-days .day-cell strong { font-size: 13px; }
+.demo-days .day-cell small { font-size: 11px; }
+@media (max-width: 1100px) { .demo-days { grid-template-columns: repeat(4,minmax(0,1fr)); } }
+@media (max-width: 767px) {
+  .demo-banner { padding: 12px 18px; gap: 8px; }
+  .demo-banner-note { display: none; }
+  .demo-banner .btn { padding: 10px 12px; }
+  .demo-label { font-size: 13px; padding: 7px 10px; }
+  .demo-shell .podium-name { font-size: 14px; }
+  .demo-shell .podium-block > strong { font-size: 12px; }
+  .demo-shell .podium-block .small { font-size: 12px; }
+  .demo-member .member-identity strong, .demo-member .member-total { font-size: 15px; }
+  .demo-member .member-identity span, .demo-member .member-total span { font-size: 12px; }
+  .demo-days { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}

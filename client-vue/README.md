@@ -9,12 +9,16 @@ The active app is Vue 3 + Vite. See the [root README](../README.md) for installa
 - Check-ins: local image selection and preview, explicit AI analysis, read-only extracted date/usage, then token-based confirm/save. Failed saving retains the result for retry. Fresh analysis can replace a check-in for the same date under the existing server rules.
 - Icons: named `lucide-vue-next` imports, inherited theme colours, two-unit stroke, 18-20px controls, 24px card icons, and 40px inline SVG empty states. Decorative icons are hidden from assistive technology; icon-only controls retain accessible names. Motion respects `prefers-reduced-motion`.
 
+## Public demo
+
+`ExploreDemo.vue` renders only the bundled `src/demo/leaderboard.json`, BrandMark, SummaryCard, and Lucide icons. It is separate from authenticated components and the API client, with only an exit action. No demo data is persisted. Regenerate the fictional fixture from the repository root with `node scripts/generate-demo.cjs`; it uses the existing ranking function offline. The public label and exit button stay visible while scrolling; podium, member cards, and daily cells reuse the responsive theme.
+
 ## Checks
 
 From the repository root:
 
 ```powershell
-node --test client-vue/src/personal-tools.test.mjs client-vue/src/screenshot-flow.test.mjs
+node --test client-vue/src/personal-tools.test.mjs client-vue/src/screenshot-flow.test.mjs client-vue/src/demo.test.mjs
 npm run build --prefix client-vue
 ```
 

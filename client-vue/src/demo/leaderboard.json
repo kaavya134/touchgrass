@@ -1,0 +1,346 @@
+{
+  "groupName": "The Sunday Sprouts",
+  "board": {
+    "timeZone": "Asia/Singapore",
+    "week": "previous",
+    "startDate": "2026-09-07",
+    "endDate": "2026-09-13",
+    "today": "2026-09-14",
+    "isFinal": true,
+    "competitionStartDate": "2026-09-07",
+    "label": "Completed-week results",
+    "requiredDates": [
+      "2026-09-07",
+      "2026-09-08",
+      "2026-09-09",
+      "2026-09-10",
+      "2026-09-11",
+      "2026-09-12",
+      "2026-09-13"
+    ],
+    "forfeit": "Bring homemade lemonade to the next picnic.",
+    "loserMemberId": "demo-rowan",
+    "members": [
+      {
+        "memberId": "demo-mina",
+        "name": "Mina Fern",
+        "legacy": false,
+        "competitionStartDate": "2026-09-07",
+        "eligibilitySource": null,
+        "rankingStatus": "eligible",
+        "requiredDates": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12",
+          "2026-09-13"
+        ],
+        "days": [
+          {
+            "date": "2026-09-07",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 25
+          },
+          {
+            "date": "2026-09-08",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 20
+          },
+          {
+            "date": "2026-09-09",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 30
+          },
+          {
+            "date": "2026-09-10",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 15
+          },
+          {
+            "date": "2026-09-11",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 25
+          },
+          {
+            "date": "2026-09-12",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 35
+          },
+          {
+            "date": "2026-09-13",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 30
+          }
+        ],
+        "submittedDays": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12",
+          "2026-09-13"
+        ],
+        "missingDays": [],
+        "totalMinutes": 180,
+        "practiceTotalMinutes": null,
+        "historicalTotalMinutes": null,
+        "todayProvisionalMinutes": null,
+        "noCheckIns": false,
+        "eligible": true,
+        "rank": 1,
+        "tied": false,
+        "outcome": "Winner"
+      },
+      {
+        "memberId": "demo-theo",
+        "name": "Theo Brook",
+        "legacy": false,
+        "competitionStartDate": "2026-09-07",
+        "eligibilitySource": null,
+        "rankingStatus": "eligible",
+        "requiredDates": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12",
+          "2026-09-13"
+        ],
+        "days": [
+          {
+            "date": "2026-09-07",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 35
+          },
+          {
+            "date": "2026-09-08",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 30
+          },
+          {
+            "date": "2026-09-09",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 25
+          },
+          {
+            "date": "2026-09-10",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 40
+          },
+          {
+            "date": "2026-09-11",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 30
+          },
+          {
+            "date": "2026-09-12",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 45
+          },
+          {
+            "date": "2026-09-13",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 35
+          }
+        ],
+        "submittedDays": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12",
+          "2026-09-13"
+        ],
+        "missingDays": [],
+        "totalMinutes": 240,
+        "practiceTotalMinutes": null,
+        "historicalTotalMinutes": null,
+        "todayProvisionalMinutes": null,
+        "noCheckIns": false,
+        "eligible": true,
+        "rank": 2,
+        "tied": false,
+        "outcome": null
+      },
+      {
+        "memberId": "demo-iris",
+        "name": "Iris Reed",
+        "legacy": false,
+        "competitionStartDate": "2026-09-07",
+        "eligibilitySource": null,
+        "rankingStatus": "eligible",
+        "requiredDates": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12",
+          "2026-09-13"
+        ],
+        "days": [
+          {
+            "date": "2026-09-07",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 45
+          },
+          {
+            "date": "2026-09-08",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 35
+          },
+          {
+            "date": "2026-09-09",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 50
+          },
+          {
+            "date": "2026-09-10",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 40
+          },
+          {
+            "date": "2026-09-11",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 45
+          },
+          {
+            "date": "2026-09-12",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 30
+          },
+          {
+            "date": "2026-09-13",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 55
+          }
+        ],
+        "submittedDays": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12",
+          "2026-09-13"
+        ],
+        "missingDays": [],
+        "totalMinutes": 300,
+        "practiceTotalMinutes": null,
+        "historicalTotalMinutes": null,
+        "todayProvisionalMinutes": null,
+        "noCheckIns": false,
+        "eligible": true,
+        "rank": 3,
+        "tied": false,
+        "outcome": null
+      },
+      {
+        "memberId": "demo-rowan",
+        "name": "Rowan Moss",
+        "legacy": false,
+        "competitionStartDate": "2026-09-07",
+        "eligibilitySource": null,
+        "rankingStatus": "eligible",
+        "requiredDates": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12",
+          "2026-09-13"
+        ],
+        "days": [
+          {
+            "date": "2026-09-07",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 60
+          },
+          {
+            "date": "2026-09-08",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 55
+          },
+          {
+            "date": "2026-09-09",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 50
+          },
+          {
+            "date": "2026-09-10",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 65
+          },
+          {
+            "date": "2026-09-11",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 45
+          },
+          {
+            "date": "2026-09-12",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 70
+          },
+          {
+            "date": "2026-09-13",
+            "scope": "official",
+            "status": "completed",
+            "minutes": 60
+          }
+        ],
+        "submittedDays": [
+          "2026-09-07",
+          "2026-09-08",
+          "2026-09-09",
+          "2026-09-10",
+          "2026-09-11",
+          "2026-09-12",
+          "2026-09-13"
+        ],
+        "missingDays": [],
+        "totalMinutes": 405,
+        "practiceTotalMinutes": null,
+        "historicalTotalMinutes": null,
+        "todayProvisionalMinutes": null,
+        "noCheckIns": false,
+        "eligible": true,
+        "rank": 4,
+        "tied": false,
+        "outcome": "Loser"
+      }
+    ]
+  }
+}

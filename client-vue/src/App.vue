@@ -10,8 +10,10 @@ import UserDiary from './components/UserDiary.vue'
 import GroupDashboard from './components/GroupDashboard.vue'
 import BrandMark from './components/BrandMark.vue'
 import AppNavigation from './components/AppNavigation.vue'
+import ExploreDemo from './components/ExploreDemo.vue'
 
 
+const demoOpen = ref(false)
 const authUser = ref(null)
 const authLoading = ref(true)
 const authError = ref('')
@@ -179,8 +181,9 @@ async function joinGroup() {
 </script>
 
 <template>
-  <p v-if="authLoading" class="auth-loading" role="status">Restoring your login...</p>
-  <AuthWelcome v-else-if="!authUser" :connection-error="authError" @authenticated="user => { authenticated(user); broadcastSessionChange() }" @retry="bootstrap" />
+  <ExploreDemo v-if="demoOpen" @exit="demoOpen = false" />
+  <div v-else-if="authLoading" class="auth-loading"><div><p role="status">Restoring your login...</p><button type="button" class="btn btn-outline-success" @click="demoOpen = true">Explore demo</button></div></div>
+  <AuthWelcome v-else-if="!authUser" @explore="demoOpen = true" :connection-error="authError" @authenticated="user => { authenticated(user); broadcastSessionChange() }" @retry="bootstrap" />
   <template v-else>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="app-shell" :key="authUser.id">
@@ -194,6 +197,7 @@ async function joinGroup() {
         <p class="sidebar-note">Signed in as {{ authUser.displayName }}. Only your account memberships appear here.</p>
       </div>
       <div class="sidebar-actions">
+        <button type="button" class="btn btn-sidebar" @click="demoOpen = true">Explore demo</button>
         <button class="btn btn-mustard" @click="entryMode('create')"><Users class="icon-control" aria-hidden="true" /> Create a group</button>
         <button class="btn btn-sidebar" @click="entryMode('join')"><Users class="icon-control" aria-hidden="true" /> Join with code</button>
         <button v-if="createdGroup" class="leave-button" @click="leaveDashboard">Close dashboard</button>

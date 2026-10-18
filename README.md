@@ -1,6 +1,6 @@
 # TouchGrass
 
-A small-group social screen-time tracker with screenshot check-ins, weekly rankings, offline activity suggestions, and a personal usage diary. Built with Vue 3, Vite, Express, and MongoDB.
+A small-group social screen-time tracker with screenshot check-ins, weekly rankings, offline activity suggestions, and a personal usage diary. Built with Vue 3, Vite, Express, and MongoDB. Choose **Explore demo** on the login screen to view a read-only fictional week without an account.
 
 ## Project layout
 
@@ -44,11 +44,19 @@ Both npm and pnpm lockfiles are included. Use one package manager consistently a
 
 ```powershell
 npm test --prefix server
-node --test client-vue/src/personal-tools.test.mjs client-vue/src/screenshot-flow.test.mjs
+node --test client-vue/src/personal-tools.test.mjs client-vue/src/screenshot-flow.test.mjs client-vue/src/demo.test.mjs
 npm run build --prefix client-vue
 ```
 
 The default server tests use mocked providers/database operations. Keep `AUTH_INTEGRATION` unset: its opt-in test connects to MongoDB, creates an isolated test database, and deletes that test database. Do not run `server/test-screenshot-live.js` unless you intend to send a real image to the configured AI provider. See [frontend notes](client-vue/README.md) for pending visual checks.
+
+## Public demo
+
+**Explore demo** shows a fixed, completed Monday-Sunday week with four fictional members, daily Social usage, calculated totals, a podium, and a custom forfeit. Every demo view is labelled **Demo · sample data**, with a persistent **Exit demo** button. Exit returns to the login screen or your existing signed-in session.
+
+The demo reads a bundled JSON fixture; it does not read/write MongoDB or browser storage, upload screenshots, call AI, or change real rankings. Normal session bootstrap may still run independently; real features retain authentication. The sample week stays fixed rather than appearing to be live tracking.
+
+To regenerate the sample fixture offline using the existing backend ranking function, run `node scripts/generate-demo.cjs`. Fictional inputs are in `scripts/demo-data.cjs`. This does not start the server or initialize competition dates. Tests check that the fixture matches the calculator and that real APIs still reject anonymous requests.
 
 ## Current limitations
 

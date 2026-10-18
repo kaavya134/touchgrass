@@ -1,6 +1,6 @@
 # Authentication and account ownership
 
-TouchGrass now requires a MongoDB account for every app feature. `GET /api/health` and the authentication bootstrap routes remain public. All group, check-in, leaderboard, screenshot AI and activity routes require a server session. The manual diary is a frontend-only feature behind the same login gate.
+Real TouchGrass features require a MongoDB account. The public Explore demo view is a read-only, bundled fictional leaderboard and has no saving, uploads, AI requests, or access to real account data. `GET /api/health` and the authentication bootstrap routes remain public. All group, check-in, leaderboard, screenshot AI and activity routes require a server session. The manual diary is a frontend-only feature behind the same login gate.
 
 ## Local setup
 
