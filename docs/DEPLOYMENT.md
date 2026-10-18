@@ -27,7 +27,7 @@ There was no hosting configuration before this preparation. These settings have 
 
 Render supplies `PORT`; the server binds it on `0.0.0.0`. Do not run `npm run dev`, database integration tests, or screenshot live tests during the hosting build. No persistent disk is needed: MongoDB stores accounts, groups, check-ins, and sessions. Images are sent for analysis, not saved as files by this app.
 
-The frontend pins pnpm 12.3.4. Keep both existing lockfiles; Corepack and the explicit install command resolve package-manager ambiguity.
+The frontend pins pnpm 10.34.7 and uses a standard single-document application lockfile. Keep both existing lockfiles; Corepack and the explicit install command resolve package-manager ambiguity. Use the Corepack-selected version for this project, rather than an unrelated global pnpm major that can rewrite the lockfile format. No application dependency versions changed in this correction.
 
 ## Environment variables
 
