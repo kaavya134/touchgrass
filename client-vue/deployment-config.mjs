@@ -9,8 +9,8 @@ export function createDeploymentConfig(env) {
   }
   return {
     framework: 'vite',
-    installCommand: 'pnpm install --frozen-lockfile',
-    buildCommand: 'pnpm run build',
+    installCommand: 'npx --yes pnpm@10.34.7 install --frozen-lockfile',
+    buildCommand: 'npx --yes pnpm@10.34.7 run build',
     outputDirectory: 'dist',
     rewrites: [
       { source: '/api/:path*', destination: `${origin.origin}/api/:path*` },

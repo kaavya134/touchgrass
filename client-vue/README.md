@@ -15,7 +15,7 @@ The active app is Vue 3 + Vite. See the [root README](../README.md) for installa
 
 ## Vercel hosting
 
-Use Root Directory `client-vue`, Node 24.x, `pnpm install --frozen-lockfile`, `pnpm run build`, and output `dist`. `vercel.mjs` builds external API rewrites from `RENDER_API_ORIGIN`; set `VITE_API_BASE_URL=/api` and `ENABLE_EXPERIMENTAL_COREPACK=1` in Production. No private backend variables belong on Vercel. See [deployment instructions](../docs/DEPLOYMENT.md) before creating the hosts.
+Use Root Directory `client-vue`, Node 24.x, `npx --yes pnpm@10.34.7 install --frozen-lockfile`, `npx --yes pnpm@10.34.7 run build`, and output `dist`. `vercel.mjs` builds external API rewrites from `RENDER_API_ORIGIN`; set `VITE_API_BASE_URL=/api` in Production. Remove `ENABLE_EXPERIMENTAL_COREPACK`; install and build explicitly invoke the pinned pnpm through npx. No private backend variables belong on Vercel. See [deployment instructions](../docs/DEPLOYMENT.md) before creating the hosts.
 
 ## Checks
 

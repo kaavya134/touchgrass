@@ -20,8 +20,8 @@ There was no hosting configuration before this preparation. These settings have 
 | Repository branch | `master` | `master` (Production Branch) |
 | Root directory | `server` | `client-vue` |
 | Node.js | `24.x` from package engines | `24.x` |
-| Install/build | `npm ci --omit=dev` | Install: `pnpm install --frozen-lockfile` |
-| Build command | The install above; no compilation | `pnpm run build` |
+| Install/build | `npm ci --omit=dev` | Install: `npx --yes pnpm@10.34.7 install --frozen-lockfile` |
+| Build command | The install above; no compilation | `npx --yes pnpm@10.34.7 run build` |
 | Start command | `npm start` | Not applicable |
 | Output directory | Not applicable | `dist` |
 | Health check | `/api/health` | Check the proxied `/api/health` |
@@ -29,7 +29,7 @@ There was no hosting configuration before this preparation. These settings have 
 
 Render supplies `PORT`; the server binds it on `0.0.0.0`. Do not run `npm run dev`, database integration tests, or screenshot live tests during the hosting build. No persistent disk is needed: MongoDB stores accounts, groups, check-ins, and sessions. Images are sent for analysis, not saved as files by this app.
 
-The frontend pins pnpm 10.34.7 and uses a standard single-document application lockfile. Keep both existing lockfiles; Corepack and the explicit install command resolve package-manager ambiguity. Use the Corepack-selected version for this project, rather than an unrelated global pnpm major that can rewrite the lockfile format. No application dependency versions changed in this correction.
+The frontend pins pnpm 10.34.7 and uses a standard single-document application lockfile. Keep both existing lockfiles. Vercel install and build explicitly invoke this exact version through npx; Corepack and the preinstalled global pnpm are not used. No application dependency versions changed in this correction.
 
 ## Environment variables
 
@@ -54,16 +54,16 @@ Do not set `AUTH_INTEGRATION=1`. Leave `PORT` to Render. No MongoDB credentials 
 | --- | --- |
 | `VITE_API_BASE_URL` | `/api` |
 | `RENDER_API_ORIGIN` | `https://touchgrass-api-7x8m.onrender.com` (no `/api` suffix) |
-| `ENABLE_EXPERIMENTAL_COREPACK` | `1` |
 
-`RENDER_API_ORIGIN` is read only by the deployment config; it is not a browser secret. The proxy defaults to the live Render backend above. Set `RENDER_API_ORIGIN` explicitly to the same origin in Vercel for clarity; an override must be an HTTPS origin with no path or credentials. Invalid overrides and a browser API base other than `/api` fail closed. Do not add AI credentials, MongoDB credentials, or `SESSION_SECRET` to Vercel. Only production needs access initially. Preview deployments should use a separate backend/database and exact preview origins if enabled later; do not wildcard-allow preview URLs.
+
+`RENDER_API_ORIGIN` is read only by the deployment config; it is not a browser secret. The proxy defaults to the live Render backend above. Set `RENDER_API_ORIGIN` explicitly to the same origin in Vercel for clarity; an override must be an HTTPS origin with no path or credentials. Invalid overrides and a browser API base other than `/api` fail closed. Do not add AI credentials, MongoDB credentials, or `SESSION_SECRET` to Vercel. Remove `ENABLE_EXPERIMENTAL_COREPACK` from Vercel environments; it is not needed. Only production needs access initially. Preview deployments should use a separate backend/database and exact preview origins if enabled later; do not wildcard-allow preview URLs.
 
 ## Dashboard sequence
 
 1. Render: New -> Web Service -> connect GitHub -> select this repository. Stop at the settings form to confirm root, branch, build, start command, health path, region, and plan.
 2. Fill Render settings and variable names above, using the temporary `.invalid` frontend origin if necessary. If using MongoDB Atlas, add only Render's advertised outbound IP ranges to the intended cluster's Network Access allowlist and confirm the database user has the needed permissions. Do not delete groups, reset the database, or open network access to all addresses as a shortcut.
 3. Create/deploy the Render service, then obtain its public `https://...onrender.com` origin. Health must report ready with `databaseConnected: true`. Startup initializes indexes and retains the existing forward-only eligibility initialization; check-ins and groups are not deleted.
-4. Vercel: Add New -> Project -> import the same repository. Set Root Directory `client-vue`, Framework Vite, Node 24.x, the commands above, and the three Vercel variables for Production. Confirm `master` is the production branch and deploy.
+4. Vercel: Add New -> Project -> import the same repository. Set Root Directory `client-vue`, Framework Vite, Node 24.x, the commands above, and the two Vercel variables for Production. Confirm `master` is the production branch and deploy.
 5. Take Vercel's actual stable production origin (not a per-commit preview URL). Replace `FRONTEND_ORIGINS` in Render with that exact origin and save/redeploy. Keep `SESSION_COOKIE_SAME_SITE=lax`. A custom domain added later must be explicitly allowed as well.
 6. Run the public-origin checks below, then use a real browser for login, refresh, logout, demo, and screenshot/activity behavior. Warm the backend first if using Render Free.
 
@@ -76,6 +76,12 @@ Creation/upgrade of a paid service is the user's dashboard choice. Render Free i
 - Vercel documents a 120-second external-origin time-to-first-byte limit. Cold Render startup plus an AI request can exceed the client budget; warm the service before trying again rather than removing timeouts.
 - Vercel's 4.5 MB Function payload limit is why the proxy is an external rewrite, not a function. Actual hosted upload acceptance still needs the synthetic public-path check and a browser file-picker check. No routing middleware is included.
 
+## Installation troubleshooting
+
+If Vercel cannot enable Corepack, a bare `pnpm install` may fall back to a globally installed pnpm that rejects this version-9 lockfile. A subsequent "headless installation requires a lockfile" message can then be a consequence of ignoring the existing file, not proof that it is missing. Check the complete log line for the exact reason.
+
+In Vercel Settings -> Build and Deployment, override **Install Command** with `npx --yes pnpm@10.34.7 install --frozen-lockfile` and **Build Command** with `npx --yes pnpm@10.34.7 run build`. Confirm Root Directory is `client-vue`. Remove `ENABLE_EXPERIMENTAL_COREPACK` from Production (and any other deployment scope being tested). The logs show installation can run before `vercel.mjs` config compilation, so changing the code alone is insufficient to fix an already configured dashboard override. Redeploy the latest master commit without reusing the previous build cache. Do not delete, regenerate, or bypass the lockfile to work around this error.
+
 ## Verification
 
 Offline from the root:
@@ -85,9 +91,9 @@ $env:AUTH_INTEGRATION='0'
 npm test --prefix server
 node --test client-vue/src/*.test.mjs
 cd client-vue
-pnpm install --frozen-lockfile
+npx --yes pnpm@10.34.7 install --frozen-lockfile
 $env:VITE_API_BASE_URL='/api'
-pnpm run build
+npx --yes pnpm@10.34.7 run build
 ```
 
 The MongoDB integration test stays skipped. Use the same-origin production build for the deployed frontend; local development can retain the example's localhost API setting.
@@ -106,7 +112,7 @@ Finally, in the browser verify signup/login as intended, refresh preserves login
 
 - [Vercel external rewrites and disabling rewrite caching](https://vercel.com/docs/routing/rewrites)
 - [Build-time programmatic Vercel configuration](https://vercel.com/docs/project-configuration/vercel-ts)
-- [Corepack and build configuration](https://vercel.com/docs/builds/configure-a-build)
+- [Vercel custom install commands](https://vercel.com/docs/builds/configure-a-build)
 - [Vercel Function payload limits](https://vercel.com/docs/functions/limitations)
 - [Vercel external-origin timeout](https://vercel.com/changelog/cdn-origin-timeout-increased-to-two-minutes)
 - [Render Express setup](https://render.com/docs/deploy-node-express-app)
