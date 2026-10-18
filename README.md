@@ -44,11 +44,15 @@ Both npm and pnpm lockfiles are included. Use one package manager consistently a
 
 ```powershell
 npm test --prefix server
-node --test client-vue/src/personal-tools.test.mjs client-vue/src/screenshot-flow.test.mjs client-vue/src/demo.test.mjs
+node --test client-vue/src/*.test.mjs
 npm run build --prefix client-vue
 ```
 
 The default server tests use mocked providers/database operations. Keep `AUTH_INTEGRATION` unset: its opt-in test connects to MongoDB, creates an isolated test database, and deletes that test database. Do not run `server/test-screenshot-live.js` unless you intend to send a real image to the configured AI provider. See [frontend notes](client-vue/README.md) for pending visual checks.
+
+## Deployment
+
+See [Vercel + Render deployment settings](docs/DEPLOYMENT.md) for the production commands, environment variable names, same-origin `/api` rewrite, and step-by-step dashboard sequence. Keep all private backend settings in Render. The frontend pins pnpm; production builds use `VITE_API_BASE_URL=/api`. Live deployment and cookie/browser checks are not complete merely because the build passes.
 
 ## Public demo
 

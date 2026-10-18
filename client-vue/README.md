@@ -13,12 +13,16 @@ The active app is Vue 3 + Vite. See the [root README](../README.md) for installa
 
 `ExploreDemo.vue` renders only the bundled `src/demo/leaderboard.json`, BrandMark, SummaryCard, and Lucide icons. It is separate from authenticated components and the API client, with only an exit action. No demo data is persisted. Regenerate the fictional fixture from the repository root with `node scripts/generate-demo.cjs`; it uses the existing ranking function offline. The public label and exit button stay visible while scrolling; podium, member cards, and daily cells reuse the responsive theme.
 
+## Vercel hosting
+
+Use Root Directory `client-vue`, Node 24.x, `pnpm install --frozen-lockfile`, `pnpm run build`, and output `dist`. `vercel.mjs` builds external API rewrites from `RENDER_API_ORIGIN`; set `VITE_API_BASE_URL=/api` and `ENABLE_EXPERIMENTAL_COREPACK=1` in Production. No private backend variables belong on Vercel. See [deployment instructions](../docs/DEPLOYMENT.md) before creating the hosts.
+
 ## Checks
 
 From the repository root:
 
 ```powershell
-node --test client-vue/src/personal-tools.test.mjs client-vue/src/screenshot-flow.test.mjs client-vue/src/demo.test.mjs
+node --test client-vue/src/*.test.mjs
 npm run build --prefix client-vue
 ```
 

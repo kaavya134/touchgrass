@@ -21,3 +21,13 @@ test('malformed response bodies and errors wrapped in HTTP 200 are handled', asy
   await assert.rejects(chatCompletion(request,{env,fetchImpl:async()=>({ok:false,status:503,json:async()=>{throw new Error('HTML')}})}), /HTTP 503/)
   await assert.rejects(chatCompletion(request,options(200,{error:{type:'invalid_request_error',message:'Invalid model'}})), /configuration issue/)
 })
+
+test('provider deadline covers response headers and response body reads with safe errors', async () => {
+  for (const phase of ['headers', 'body']) {
+    await assert.rejects(chatCompletion(request, { env, fetchImpl: async (url, options) => {
+      assert.ok(options.signal instanceof AbortSignal)
+      if (phase === 'headers') throw Object.assign(new Error('private provider detail'), { name: 'TimeoutError' })
+      return { ok: true, status: 200, json: async () => { throw Object.assign(new Error('private provider detail'), { name: 'TimeoutError' }) } }
+    } }), error => error.status === 504 && !error.message.includes('private provider detail'))
+  }
+})

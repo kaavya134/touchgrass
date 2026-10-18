@@ -18,9 +18,13 @@ Passwords are hashed using bcryptjs at cost 12. Passwords must contain at least 
 
 `GET /api/auth/me` restores the current user after refresh. Login and signup return a public user and a new CSRF token. All account-specific UI is unmounted on logout/session expiry, and supported browser tabs receive a session-change notification. CORS permits only exact configured frontend origins with credentials. Authentication attempts are limited to 10 per IP per 15 minutes per backend process; this limiter is in memory, not a distributed MongoDB limiter. Use a shared rate-limit store or an edge limit before scaling across instances.
 
-## Planned hosted configuration (not deployed)
+## Hosted configuration: Vercel proxy + Render
 
-Set `NODE_ENV=production`, a strong persistent `SESSION_SECRET`, `FRONTEND_ORIGINS=https://your-frontend.example`, and `VITE_API_BASE_URL=https://your-backend.example/api` in the respective environments. Production always uses Secure cookies. For separate cross-site frontend/backend domains, set `SESSION_COOKIE_SAME_SITE=none` and `SESSION_COOKIE_SECURE=true`, and serve both over HTTPS. Set `TRUST_PROXY_HOPS` to the exact number of trusted proxy hops only if required by the actual hosting topology. Never blindly trust arbitrary forwarded headers. Test credentialed CORS, preflights, cookie delivery, CSRF rejection and logout on the real hosted domains. Some browsers block third-party cookies even with SameSite=None; prefer same-site custom domains or an API reverse proxy. Cookie domain is intentionally not expanded across subdomains.
+Use the exact settings and dashboard sequence in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). The browser uses `VITE_API_BASE_URL=/api`; build-time `client-vue/vercel.mjs` rewrites `/api` to the Render service configured by `RENDER_API_ORIGIN`. This is an external rewrite, with API caching disabled, rather than a serverless proxy function.
+
+On Render set `NODE_ENV=production`, a strong stable `SESSION_SECRET`, exact HTTPS `FRONTEND_ORIGINS`, `SESSION_COOKIE_SAME_SITE=lax`, and `SESSION_COOKIE_SECURE=true`. Start with `TRUST_PROXY_HOPS=1` to trust the immediate Render proxy. Verify cookie delivery and rate limiting on the actual hosting path; never blindly trust all forwarded headers or increase the hop count merely because there is another proxy. Cookies remain host-only and HttpOnly; the same-origin rewrite lets the browser use them without third-party-cookie reliance. No CSRF or origin checks are removed.
+
+Direct cross-site frontend/backend domains would instead require `SameSite=None` and Secure cookies, and can fail under third-party-cookie blocking; that is not the selected deployment topology. Do not change to it as a quick fix. Test credentialed requests, session persistence, logout, and CSRF rejection on the actual frontend domain before calling the release complete. Backend startup retains the documented eligibility initialization below; it does not delete groups or rewrite old check-ins.
 
 ## Identity and legacy records
 

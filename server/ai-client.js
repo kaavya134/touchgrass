@@ -3,18 +3,22 @@ class AIError extends Error {
 }
 async function chatCompletion({ messages, maxTokens = 500 }, { env = process.env, fetchImpl = fetch } = {}) {
   if (!env.AI_API_KEY?.trim() || !env.AI_BASE_URL || !env.AI_MODEL) throw new AIError(503, 'AI is not configured on the backend.')
+  const signal = AbortSignal.timeout(60000)
   let response
   try {
     response = await fetchImpl(`${env.AI_BASE_URL.replace(/\/+$/, '')}/chat/completions`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.AI_API_KEY}` },
-      signal: AbortSignal.timeout(60000),
+      signal,
       body: JSON.stringify({ model: env.AI_MODEL, messages, response_format: { type: 'json_object' }, max_tokens: maxTokens })
     })
   } catch (error) {
-    throw new AIError(error.name === 'TimeoutError' ? 504 : 502, error.name === 'TimeoutError' ? 'AI provider timed out. Please retry.' : 'Could not reach the AI provider. Check backend connectivity and AI_BASE_URL.')
+    throw new AIError(signal.aborted || error.name === 'TimeoutError' ? 504 : 502, signal.aborted || error.name === 'TimeoutError' ? 'AI provider timed out. Please retry.' : 'Could not reach the AI provider. Check backend connectivity and AI_BASE_URL.')
   }
   let data
-  try { data = await response.json() } catch { /* Some proxies return non-JSON error pages. */ }
+  try { data = await response.json() } catch (error) {
+    if (signal.aborted || error.name === 'TimeoutError') throw new AIError(504, 'AI provider timed out. Please retry.')
+    // Some proxies return non-JSON error pages. Never echo provider bodies.
+  }
   if (!response.ok || data?.error) {
     const providerError = data?.error
     const invalidRequest = providerError?.type === 'invalid_request_error' || providerError?.code === 'invalid_request_error'

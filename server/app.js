@@ -17,7 +17,10 @@ function createApp({ store, env = process.env } = {}) {
     next()
   })
   const startedAt = new Date().toISOString()
-  app.get('/api/health',(req,res)=>res.json({ service:'touchgrass',pid:process.pid,startedAt,databaseConnected:require('mongoose').connection.readyState===1 }))
+  app.get('/api/health',(req,res)=>{
+    const databaseConnected = require('mongoose').connection.readyState === 1
+    res.status(databaseConnected ? 200 : 503).json({ service:'touchgrass',pid:process.pid,startedAt,databaseConnected })
+  })
   app.use(sessionMiddleware(config,store))
   app.use(currentUser)
   app.use((req,res,next)=>express.json({limit:req.path==='/api/screenshots/analyze'?'7mb':'16kb'})(req,res,next))
